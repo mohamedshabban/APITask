@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace WebApplication2.Models
 {
-   
     public class Person
     {
         public int PersonId { get; set; }

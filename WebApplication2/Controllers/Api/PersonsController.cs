@@ -14,21 +14,27 @@ namespace WebApplication2.Controllers.Api
     public class PersonsController : ApiController
     {
         private readonly AppDbContext _context;
+        static readonly IPersonRepository studentRepository = new PersonRepository();
         public PersonsController()
         {
             _context = new AppDbContext();
         }
         // GET api/<controller>
         // GET /api/customers
-        public IHttpActionResult GetPerson(string name)
+        public Person GetPerson(string name)
         {
             
-            var person = 
-                _context.Persons.Include(c => c.Hoppies)
-                .SingleOrDefault(c => c.Name == name);
+            //var person = 
+            //    _context.Persons.Include(c => c.Hoppies)
+            //    .SingleOrDefault(c => c.Name == name);
+            //if (person == null)
+            //    throw new HttpResponseException(HttpStatusCode.NotFound);
+
+            var person = studentRepository.GetAllPersons()
+                .First(c => c.Name == name);
             if (person == null)
-                return NotFound();
-            return Ok(person);
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            return person;
         }
 
     }
